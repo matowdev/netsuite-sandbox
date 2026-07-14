@@ -6,7 +6,7 @@
  * Validates the "memo" field. Detects the invalid word "bad" and automatically replaces it with asterisks (***).
  */
 define([], () => {
-  const SCRIPT_FILENAME = 'memo_field_checker_CS';
+  const SCRIPT_FILENAME = 'memo_field_validate_checker_cs';
 
   /**
    * @param {ValidateFieldContext} context
