@@ -2,7 +2,7 @@
  * @NApiVersion 2.1
  * @NModuleScope SameAccount
  *
- * Get "query" data from customer record (from/in browser).
+ * Get "query" data from "Customer" record (from/in browser).
  */
 define(['N/query'], (query) => {
   // ** ex. testing SuiteQL based on query to a "dual" virtual table
