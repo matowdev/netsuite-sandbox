@@ -8,7 +8,7 @@ define(['N/search'], (search) => {
   const customerSearch = search.create({
     // set the record type "Customer" (i.e. in which records we will make a "search")
     type: search.Type.CUSTOMER,
-    // what columns we want to see (what data we want to get)
+    // the list of columns we want to see (the "data" we want to get in result)
     columns: [
       search.createColumn({
         name: 'companyname',
@@ -21,7 +21,7 @@ define(['N/search'], (search) => {
         join: 'Address',
       }),
     ],
-    // what criteria we will use to filter the record(s)
+    // criteria for filtering a record(s)
     filters: [
       search.createFilter({
         // name: 'id',
