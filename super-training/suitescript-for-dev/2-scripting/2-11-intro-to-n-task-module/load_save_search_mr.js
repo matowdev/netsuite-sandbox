@@ -2,9 +2,9 @@
  * @NApiVersion 2.1
  * @NScriptType MapReduceScript
  *
- * Get the "Save Search" ID according to the "MapReduceScript" logic.
+ * Get the "Saved Search" ID according to the "MapReduceScript" logic.
  */
-define(['N/record', 'N/runtime'], (record, runtime) => {
+define(['N/record', 'N/runtime', 'N/search'], (record, runtime, search) => {
   const SCRIPT_FILENAME = 'load_save_search_mr';
 
   /**
@@ -17,6 +17,17 @@ define(['N/record', 'N/runtime'], (record, runtime) => {
         title: `${SCRIPT_FILENAME}: getInputData`,
         details: 'Start execution',
       });
+
+      const savedSearchId =
+        runtime
+          .getCurrentScript()
+          .getParameter({ name: 'custscript_mr_search_to_process' }) + '' || '';
+
+      if (!savedSearchId) return []; // if not found.. return "empty" [] to avoid an error
+
+      const loadSearch = search.load({ id: savedSearchId });
+
+      return loadSearch;
     } catch (e) {
       log.error({
         title: `${SCRIPT_FILENAME}: getInputData`,
@@ -32,6 +43,17 @@ define(['N/record', 'N/runtime'], (record, runtime) => {
   const map = (context) => {
     try {
       const { key, value } = context;
+
+      const { id: recordId, recordType } = JSON.parse(value);
+
+      const savedId = record
+        .load({ id: recordId, type: recordType })
+        .save({ ignoreMandatoryFields: true });
+
+      log.debug({
+        title: `${SCRIPT_FILENAME}: map`,
+        details: `Record ${savedId} has been saved`,
+      });
     } catch (e) {
       log.error({
         title: `${SCRIPT_FILENAME}: map`,
